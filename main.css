@@ -1,0 +1,13 @@
+#root .wrapper {
+  width: 80%;
+  height: 1000px;
+  background-color: aqua;
+  margin: 0 auto;
+  padding: 0 4%; }
+  #root .wrapper .search {
+    padding: 1rem 0; }
+  #root .wrapper main {
+    height: 500px;
+    background-color: blueviolet; }
+
+/*# sourceMappingURL=main.css.map */
