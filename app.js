@@ -35,36 +35,51 @@ const mainPageTemplate = `
   </div>
 `;
 
-// 첫 화면 렌더링
+// 첫 화면을 렌더링 합니다.
 init();
-
-// console.log(newsList);
-// console.log("response.docs", newsList.response.docs);
-
-// document.getElementById("root").appendChild(ul);
 
 function init() {
   document.getElementById("root").innerHTML = mainPageTemplate;
   const searchInputEl = document.getElementById("inputSearch");
 
-  // 뉴스 리스트 가져오기
-  printNewsList(NEWS_URL.replace("@searchkeyword", "korea"));
+  // 뉴스 리스트를 가져와서 화면에 출력합니다.
+  // printNewsList(NEWS_URL.replace("@searchkeyword", "korea"));
 
+  let setTimeoutId;
+
+  // 검색창의 이벤트리스너입니다.
   searchInputEl.addEventListener("keyup", () => {
-    console.log("input keyup");
-    setTimeout(() => {
-      console.log(searchInputEl.value);
+    // console.log("input keyup");
+
+    // console.log("before", setTimeoutId);
+    if (setTimeoutId) {
+      clearTimeout(setTimeoutId);
+      setTimeoutId = null;
+    }
+    // console.log("after", setTimeoutId);
+
+    // 0.5초 후 검색을 진행합니다.
+    setTimeoutId = setTimeout(() => {
+      console.log("0.5초후 printNewsList 실행");
+      printNewsList(NEWS_URL.replace("@searchkeyword", searchInputEl.value));
     }, 500);
+
+    // searchInputEl.addEventListener("keyup", (e) => {
+    //   console.log("clearTimeout 실행");
+    //   clearTimeout(setTimeoutId);
+    //   removeEventListener('keyup');
+    // });
   });
 }
 
+// json데이터를 가져와서 화면에 뉴스리스트를 출력합니다.
 async function printNewsList(url) {
   const ul = document.createElement("ul");
 
   const newsList = await getData(url);
-  console.log(newsList);
-  console.log(newsList.response);
-  console.log(newsList.response.docs);
+  // console.log(newsList);
+  // console.log(newsList.response);
+  // console.log(newsList.response.docs);
   // newsList.response.docs.forEach((news) => {
   newsList.response.docs.forEach((news) => {
     const li = document.createElement("li");
