@@ -4,15 +4,21 @@ const NEWS_URL =
 
 async function getData(url) {
   const response = await fetch(url);
-  return await response.json();
+  const responsejson = await response.json();
+  console.log(responsejson);
+  return responsejson;
 }
 
 // function getData(url) {
-//   fetch(url).then(response =>response.json())
+//   let result;
+//   fetch(url)
+//     .then((response) => response.json())
+//     .then((docs) => result);
+//   return result;
 // }
 
-ajax.open("GET", NEWS_URL, false);
-ajax.send();
+// ajax.open("GET", NEWS_URL, false);
+// ajax.send();
 
 // let newsList;
 
@@ -42,7 +48,7 @@ function init() {
   const searchInputEl = document.getElementById("inputSearch");
 
   // 뉴스 리스트 가져오기
-  // printNewsList(NEWS_URL.replace("@searchkeyword", "korea"));
+  printNewsList(NEWS_URL.replace("@searchkeyword", "korea"));
 
   searchInputEl.addEventListener("keyup", () => {
     console.log("input keyup");
@@ -52,11 +58,14 @@ function init() {
   });
 }
 
-function printNewsList(url) {
+async function printNewsList(url) {
   const ul = document.createElement("ul");
 
-  const newsList = getData(url);
-  // console.log(newsList);
+  const newsList = await getData(url);
+  console.log(newsList);
+  console.log(newsList.response);
+  console.log(newsList.response.docs);
+  // newsList.response.docs.forEach((news) => {
   newsList.response.docs.forEach((news) => {
     const li = document.createElement("li");
     li.innerText = news.headline.main;
