@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: #333; }
+
 #root .wrapper {
   width: 80%;
   height: 1000px;
@@ -5,9 +11,27 @@
   margin: 0 auto;
   padding: 0 4%; }
   #root .wrapper .search {
-    padding: 1rem 0; }
+    padding: 1rem 0;
+    position: relative; }
+    #root .wrapper .search label {
+      display: inline-block;
+      width: 10%; }
+    #root .wrapper .search #inputSearch {
+      width: 30%; }
+    #root .wrapper .search .search_history_wrapper {
+      margin-left: 10%;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 30%;
+      min-height: 1rem;
+      padding: 0 2%;
+      background-color: orange;
+      box-sizing: border-box;
+      display: none; }
+      #root .wrapper .search .search_history_wrapper.on {
+        display: block; }
   #root .wrapper main {
-    height: 500px;
     background-color: blueviolet; }
 
 /*# sourceMappingURL=main.css.map */
