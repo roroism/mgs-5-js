@@ -32,5 +32,7 @@ body {
         display: block; }
   #root .wrapper main {
     background-color: blueviolet; }
+    #root .wrapper main ul li {
+      height: 200px; }
 
 /*# sourceMappingURL=main.css.map */
