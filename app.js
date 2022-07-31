@@ -12,6 +12,8 @@ const store = {
   newList: [],
   // 검색 성공한 단어들을 저장할 배열입니다.
   searchHistories: [],
+  // clip된 기사를 저장할 배열입니다.
+  clipList: [],
 };
 
 async function getData(url) {
@@ -28,15 +30,21 @@ const mainPageTemplate = `
     <div class="clipped_news_wrapper">
       <button>Clipped News</button>
     </div>
-    <div class="search">
-      <label for="inputSearch">Search</label>
-      <input type="text" id="inputSearch">
-      <div class="search_history_wrapper">
+
+    <div class="search_wrapper on">
+      <div class="search">
+        <label for="inputSearch">Search</label>
+        <input type="text" id="inputSearch">
+        <div class="search_history_wrapper">
+        </div>
+      </div>
+      <div class="search_result_wrapper">
       </div>
     </div>
-    <div class="search_result_wrapper">
-    </div>
-    <main>
+
+    <main class="newslist_wrapper on">
+    </main>
+    <main class="cliplist_wrapper">
     </main>
   </div>
 `;
@@ -161,12 +169,35 @@ function init() {
       document.querySelector("body").style.backgroundColor = "blue";
     }
   });
+
+  const searchWrapperEl = document.querySelector(".search_wrapper");
+  const newslistWrapperEl = document.querySelector(".newslist_wrapper");
+  document
+    .querySelector(".clipped_news_wrapper > button")
+    .addEventListener("click", () => {
+      if (searchWrapperEl.classList.contains("on")) {
+        searchWrapperEl.classList.remove("on");
+        newslistWrapperEl.classList.remove("on");
+      } else {
+        searchWrapperEl.classList.add("on");
+        newslistWrapperEl.classList.add("on");
+      }
+    });
+
+  const mainEl = document.querySelector("main.newslist_wrapper");
+  mainEl.addEventListener("click", (e) => {
+    if (e.target.classList.contains("clip_button")) {
+      console.log("clicked clip_button");
+    }
+  });
 }
 
 // json데이터를 가져와서 화면에 뉴스리스트를 출력합니다.
 async function printNewsList(url, searchType) {
   const newsList = await getData(url.replace("@page", store.page));
 
+  // 새로검색하면 기존 데이터를 지우고 저장하고,
+  // 추가검색하면 기존 데이터에 추가로 저장합니다.
   if (searchType === NEW_SEARCH) {
     store.newsList = newsList.response.docs;
   } else {
@@ -176,9 +207,9 @@ async function printNewsList(url, searchType) {
 
   console.log("store.newsList", store.newsList);
 
-  const mainEl = document.querySelector("main");
-  const mainChildUlEl = document.querySelector("main > ul");
-
+  const mainEl = document.querySelector("main.newslist_wrapper");
+  const mainChildUlEl = document.querySelector("main.newslist_wrapper > ul");
+  console.log("mainChildUlEl", mainChildUlEl);
   // 새로 검색한 경우에는 기존의 출력된 뉴스 리스트를 전부 삭제합니다.
   if (searchType === NEW_SEARCH && mainChildUlEl !== null) {
     mainEl.removeChild(mainChildUlEl);
@@ -191,20 +222,27 @@ async function printNewsList(url, searchType) {
 
   for (let i = (store.page - 1) * 10; i < store.newsList.length; i++) {
     const li = document.createElement("li");
+    li.dataset._id = store.newsList[i]._id;
+    // 기사 엘리먼트 생성합니다.
     const p = document.createElement("p");
     p.innerText = store.newsList[i].headline.main;
     li.appendChild(p);
+    // 날짜 엘리먼트 생성합니다.
     const span = document.createElement("span");
     span.innerText = store.newsList[i].pub_date;
     li.appendChild(span);
+    //clip하기 버튼 생성합니다.
     const clipBtn = document.createElement("button");
+    clipBtn.className = "clip_button";
     clipBtn.innerText = "Clip this";
     li.appendChild(clipBtn);
+    // 뉴스보러가기 anchor 생성합니다.
     const a = document.createElement("a");
     a.href = store.newsList[i].web_url;
     a.target = "_blank";
     a.title = "open in new window";
     li.appendChild(a);
+    // 뉴스보러가기 버튼 생성합니다.
     const detailBtn = document.createElement("button");
     detailBtn.innerText = "See Detail";
     a.appendChild(detailBtn);
@@ -278,3 +316,9 @@ function searchResult() {
     searchResultWrapperEl.appendChild(createspanEl);
   }
 }
+
+function addClipList() {}
+
+function removeClipList() {}
+
+function printClipList() {}

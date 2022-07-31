@@ -9,30 +9,44 @@ body {
   background-color: aqua;
   margin: 0 auto;
   padding: 0 4%; }
-  #root .wrapper .search {
-    padding: 1rem 0;
-    position: relative; }
-    #root .wrapper .search label {
-      display: inline-block;
-      width: 10%; }
-    #root .wrapper .search #inputSearch {
-      width: 30%; }
-    #root .wrapper .search .search_history_wrapper {
-      margin-left: 10%;
-      position: absolute;
-      left: 0;
-      top: 2.3rem;
-      width: 30%;
-      min-height: 1rem;
-      padding: 0 2%;
-      background-color: orange;
-      box-sizing: border-box;
-      display: none; }
-      #root .wrapper .search .search_history_wrapper.on {
-        display: block; }
-  #root .wrapper main {
+  #root .wrapper .search_wrapper {
+    display: none; }
+    #root .wrapper .search_wrapper.on {
+      display: block; }
+    #root .wrapper .search_wrapper .search {
+      padding: 1rem 0;
+      position: relative; }
+      #root .wrapper .search_wrapper .search label {
+        display: inline-block;
+        width: 10%; }
+      #root .wrapper .search_wrapper .search #inputSearch {
+        width: 30%; }
+      #root .wrapper .search_wrapper .search .search_history_wrapper {
+        margin-left: 10%;
+        position: absolute;
+        left: 0;
+        top: 2.3rem;
+        width: 30%;
+        min-height: 1rem;
+        padding: 0 2%;
+        background-color: orange;
+        box-sizing: border-box;
+        display: none; }
+        #root .wrapper .search_wrapper .search .search_history_wrapper.on {
+          display: block; }
+  #root .wrapper main.newslist_wrapper {
+    display: none;
     background-color: blueviolet; }
-    #root .wrapper main ul li {
+    #root .wrapper main.newslist_wrapper.on {
+      display: block; }
+    #root .wrapper main.newslist_wrapper ul li {
+      height: 200px; }
+  #root .wrapper main.cliplist_wrapper {
+    display: none;
+    background-color: blueviolet; }
+    #root .wrapper main.cliplist_wrapper.on {
+      display: block; }
+    #root .wrapper main.cliplist_wrapper ul li {
       height: 200px; }
 
 /*# sourceMappingURL=main.css.map */
