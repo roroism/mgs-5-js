@@ -1,4 +1,5 @@
-const NEWS_URL = "";
+const NEWS_URL =
+  'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr';
 
 const NEW_SEARCH = "NEW_SEARCH";
 const ADD_SEARCH = "ADD_SEARCH";
@@ -27,7 +28,7 @@ const mainPageTemplate = `
     <header>
     </header>
     <div class="clipped_news_wrapper">
-      <button>Clipped News</button>
+      <button>clipped News</button>
     </div>
 
     <div class="search_wrapper on">
@@ -176,15 +177,17 @@ const newslistWrapperEl = document.querySelector("main.newslist_wrapper");
 
 document
   .querySelector(".clipped_news_wrapper > button")
-  .addEventListener("click", () => {
+  .addEventListener("click", (e) => {
     if (searchWrapperEl.classList.contains("on")) {
       searchWrapperEl.classList.remove("on");
       newslistWrapperEl.classList.remove("on");
       cliplistWrapperEl.classList.add("on");
+      e.currentTarget.innerText = "searched News";
     } else {
       cliplistWrapperEl.classList.remove("on");
       searchWrapperEl.classList.add("on");
       newslistWrapperEl.classList.add("on");
+      e.currentTarget.innerText = "clipped News";
     }
   });
 
