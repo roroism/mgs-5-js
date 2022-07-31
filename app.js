@@ -1,5 +1,4 @@
-const NEWS_URL =
-  'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr';
+const NEWS_URL = "";
 
 const NEW_SEARCH = "NEW_SEARCH";
 const ADD_SEARCH = "ADD_SEARCH";
