@@ -53,11 +53,13 @@ const mainPageListTemplate = `
   
 `;
 
-//input 태그의 Element입니다.
+// input 태그의 Element입니다.
 let searchInputEl;
 
 // 첫 화면을 렌더링 하고, event를 등록합니다.
 init();
+
+const cliplistWrapperEl = document.querySelector("main.cliplist_wrapper");
 
 function init() {
   document.getElementById("root").innerHTML = mainPageTemplate;
@@ -170,26 +172,60 @@ function init() {
     }
   });
 
+  // 버튼을 클릭하면 clip화면과 검색화면을 switching 해주는 이벤트입니다.
   const searchWrapperEl = document.querySelector(".search_wrapper");
-  const newslistWrapperEl = document.querySelector(".newslist_wrapper");
+  const newslistWrapperEl = document.querySelector("main.newslist_wrapper");
+
   document
     .querySelector(".clipped_news_wrapper > button")
     .addEventListener("click", () => {
       if (searchWrapperEl.classList.contains("on")) {
         searchWrapperEl.classList.remove("on");
         newslistWrapperEl.classList.remove("on");
+        cliplistWrapperEl.classList.add("on");
       } else {
+        cliplistWrapperEl.classList.remove("on");
         searchWrapperEl.classList.add("on");
         newslistWrapperEl.classList.add("on");
       }
     });
 
-  const mainEl = document.querySelector("main.newslist_wrapper");
-  mainEl.addEventListener("click", (e) => {
+  // 렌더 된 검색목록에 있는 clip this 혹은 unclip this 버튼 이벤트입니다.
+  const newslistMainEl = document.querySelector("main.newslist_wrapper");
+  newslistMainEl.addEventListener("click", (e) => {
+    // click 한 요소가 clip this 버튼인지 확인합니다.
     if (e.target.classList.contains("clip_button")) {
-      console.log("clicked clip_button");
+      // 이미 clip된 요소인지 아닌지 검사하고,
+      // clip된 것이라면 clipList 배열에서 삭제합니다.
+      if (e.target.parentElement.classList.contains("clipped")) {
+        const index = store.clipList.findIndex((clippedNews) => {
+          return clippedNews._id === e.target.parentElement.dataset._id;
+        });
+        store.clipList.splice(index, 1);
+
+        e.target.parentElement.classList.remove("clipped");
+        e.target.innerText = "Clip this";
+        // console.log(store.clipList);
+      } else {
+        // clip안 된 것이라면,
+        // newsList 배열에서 해당 item을 찾아서 clipList에 넣습니다.
+        store.clipList.push(
+          store.newsList.find(
+            (item) => item._id === e.target.parentElement.dataset._id
+          )
+        );
+        e.target.parentElement.classList.add("clipped");
+        e.target.innerText = "Unclip this";
+        // console.log(store.clipList);
+      }
+      // 'clip된 뉴스만 보기' 화면에 재반영합니다.
+      printClipList();
     }
   });
+
+  // 렌더 된 clip목록에 있는 unclip this 버튼 이벤트입니다.
+  const cliplistMainEl = document.querySelector("main.cliplist_wrapper");
+  cliplistMainEl.addEventListener(() => {});
 }
 
 // json데이터를 가져와서 화면에 뉴스리스트를 출력합니다.
@@ -205,7 +241,7 @@ async function printNewsList(url, searchType) {
     store.newsList.push(...newsList.response.docs);
   }
 
-  console.log("store.newsList", store.newsList);
+  // console.log("store.newsList", store.newsList);
 
   const mainEl = document.querySelector("main.newslist_wrapper");
   const mainChildUlEl = document.querySelector("main.newslist_wrapper > ul");
@@ -216,33 +252,45 @@ async function printNewsList(url, searchType) {
   }
 
   //가져온 기사가 한개도 없다면 함수를 종료합니다.
-  if (newsList.length === 0) return;
+  if (store.newsList.length === 0) return;
 
   const ul = document.createElement("ul");
 
   for (let i = (store.page - 1) * 10; i < store.newsList.length; i++) {
     const li = document.createElement("li");
     li.dataset._id = store.newsList[i]._id;
-    // 기사 엘리먼트 생성합니다.
+    // 기사 엘리먼트(p)를 생성합니다.
     const p = document.createElement("p");
     p.innerText = store.newsList[i].headline.main;
     li.appendChild(p);
-    // 날짜 엘리먼트 생성합니다.
+    // 날짜 엘리먼트(span)를 생성합니다.
     const span = document.createElement("span");
     span.innerText = store.newsList[i].pub_date;
     li.appendChild(span);
-    //clip하기 버튼 생성합니다.
+    // clip하기 혹은 unclip하기 버튼을 생성합니다.
     const clipBtn = document.createElement("button");
     clipBtn.className = "clip_button";
-    clipBtn.innerText = "Clip this";
+
+    // 이미 clip 된 뉴스인지 아닌지 검사합니다.
+    if (
+      store.clipList.find((clipedNews) => {
+        return store.newList[i]._id === clipedNews._id;
+      })
+    ) {
+      clipBtn.innerText = "Unclip this";
+      li.classList.add("clipped");
+    } else {
+      clipBtn.innerText = "Clip this";
+    }
+
     li.appendChild(clipBtn);
-    // 뉴스보러가기 anchor 생성합니다.
+    // 뉴스보러가기 anchor를 생성합니다.
     const a = document.createElement("a");
     a.href = store.newsList[i].web_url;
     a.target = "_blank";
     a.title = "open in new window";
     li.appendChild(a);
-    // 뉴스보러가기 버튼 생성합니다.
+    // 뉴스보러가기 버튼을 생성합니다.
     const detailBtn = document.createElement("button");
     detailBtn.innerText = "See Detail";
     a.appendChild(detailBtn);
@@ -317,8 +365,50 @@ function searchResult() {
   }
 }
 
-function addClipList() {}
+// clip된 기사들을 출력합니다.
+function printClipList() {
+  // console.log("printClipList() 진입");
+  const mainChildUlEl = document.querySelector("main.cliplist_wrapper > ul");
 
-function removeClipList() {}
+  // 출력되어있는 목록을 전부 삭제합니다.
+  if (mainChildUlEl !== null) {
+    cliplistWrapperEl.removeChild(mainChildUlEl);
+  }
 
-function printClipList() {}
+  // clip 된 뉴스가 없다면 함수를 종료합니다.
+  if (store.clipList.length === 0) return;
+
+  const ul = document.createElement("ul");
+  store.clipList.forEach((item) => {
+    const li = document.createElement("li");
+    li.dataset._id = item._id;
+    // 기사 엘리먼트(p)을 생성합니다.
+    const p = document.createElement("p");
+    p.innerText = item.headline.main;
+    li.appendChild(p);
+    // 날짜 엘리먼트(span)을 생성합니다.
+    const span = document.createElement("span");
+    span.innerText = item.pub_date;
+    li.appendChild(span);
+    // unclip하기 버튼 생성합니다.
+    const clipBtn = document.createElement("button");
+    clipBtn.className = "clip_button";
+    clipBtn.innerText = "Unclip this";
+    li.classList.add("clipped");
+    li.appendChild(clipBtn);
+    // 뉴스보러가기 anchor를 생성합니다.
+    const a = document.createElement("a");
+    a.href = item.web_url;
+    a.target = "_blank";
+    a.title = "open in new window";
+    li.appendChild(a);
+    // 뉴스보러가기 버튼을 생성합니다.
+    const detailBtn = document.createElement("button");
+    detailBtn.innerText = "See Detail";
+    a.appendChild(detailBtn);
+
+    ul.appendChild(li);
+  });
+
+  cliplistWrapperEl.appendChild(ul);
+}
