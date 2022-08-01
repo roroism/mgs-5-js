@@ -278,13 +278,19 @@ async function printNewsList(url, searchType) {
 
   for (let i = (store.page - 1) * 10; i < store.newsList.length; i++) {
     const li = document.createElement("li");
+    //id값을 li엘리먼트에 data로 주입합니다.
     li.dataset._id = store.newsList[i]._id;
-    // 기사 엘리먼트(p)를 생성합니다.
+    //section출력을 위한 엘리먼트(span)을 생성합니다.
+    const sectionEl = document.createElement("span");
+    sectionEl.innerText = store.newsList[i].section_name;
+    li.appendChild(sectionEl);
+    // 기사 엘리먼트(strong)를 생성합니다.
     const strong = document.createElement("strong");
     strong.innerText = store.newsList[i].headline.main;
     li.appendChild(strong);
     // 날짜 엘리먼트(span)를 생성합니다.
     const span = document.createElement("span");
+    span.className = "pub_date";
     // span.innerText = store.newsList[i].pub_date;
     span.innerText = store.newsList[i].pub_date.replace("T", " ").split("+")[0];
     // console.log(new Date(store.newsList[i].pub_date));
@@ -405,13 +411,19 @@ function printClipList() {
   const ul = document.createElement("ul");
   store.clipList.forEach((item) => {
     const li = document.createElement("li");
+    //id값을 li엘리먼트에 data로 주입합니다.
     li.dataset._id = item._id;
-    // 기사 엘리먼트(p)을 생성합니다.
+    //section출력을 위한 엘리먼트(span)을 생성합니다.
+    const sectionEl = document.createElement("span");
+    sectionEl.innerText = item.section_name;
+    li.appendChild(sectionEl);
+    // 기사 엘리먼트(strong)을 생성합니다.
     const strong = document.createElement("strong");
     strong.innerText = item.headline.main;
     li.appendChild(strong);
     // 날짜 엘리먼트(span)을 생성합니다.
     const span = document.createElement("span");
+    span.className = "pub_date";
     span.innerText = item.pub_date.replace("T", " ").split("+")[0];
     // span.innerText = item.pub_date;
     li.appendChild(span);
