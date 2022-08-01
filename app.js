@@ -280,12 +280,14 @@ async function printNewsList(url, searchType) {
     const li = document.createElement("li");
     li.dataset._id = store.newsList[i]._id;
     // 기사 엘리먼트(p)를 생성합니다.
-    const p = document.createElement("p");
-    p.innerText = store.newsList[i].headline.main;
-    li.appendChild(p);
+    const strong = document.createElement("strong");
+    strong.innerText = store.newsList[i].headline.main;
+    li.appendChild(strong);
     // 날짜 엘리먼트(span)를 생성합니다.
     const span = document.createElement("span");
-    span.innerText = store.newsList[i].pub_date;
+    // span.innerText = store.newsList[i].pub_date;
+    span.innerText = store.newsList[i].pub_date.replace("T", " ").split("+")[0];
+    // console.log(new Date(store.newsList[i].pub_date));
     li.appendChild(span);
     // clip하기 혹은 unclip하기 버튼을 생성합니다.
     const clipBtn = document.createElement("button");
@@ -405,12 +407,13 @@ function printClipList() {
     const li = document.createElement("li");
     li.dataset._id = item._id;
     // 기사 엘리먼트(p)을 생성합니다.
-    const p = document.createElement("p");
-    p.innerText = item.headline.main;
-    li.appendChild(p);
+    const strong = document.createElement("strong");
+    strong.innerText = item.headline.main;
+    li.appendChild(strong);
     // 날짜 엘리먼트(span)을 생성합니다.
     const span = document.createElement("span");
-    span.innerText = item.pub_date;
+    span.innerText = item.pub_date.replace("T", " ").split("+")[0];
+    // span.innerText = item.pub_date;
     li.appendChild(span);
     // unclip하기 버튼 생성합니다.
     const clipBtn = document.createElement("button");
