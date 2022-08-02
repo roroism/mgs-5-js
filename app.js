@@ -1,4 +1,5 @@
-const NEWS_URL = "";
+const NEWS_URL =
+  'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr';
 
 const NEW_SEARCH = "NEW_SEARCH";
 const ADD_SEARCH = "ADD_SEARCH";
@@ -33,7 +34,7 @@ const mainPageTemplate = `
     <div class="search_wrapper on">
       <div class="search">
         <label for="inputSearch">Search</label>
-        <input type="text" id="inputSearch">
+        <input type="text" id="inputSearch" placeholder="Search">
         <div class="search_history_wrapper">
         </div>
       </div>
@@ -135,7 +136,7 @@ searchInputEl.addEventListener("keyup", (e) => {
 });
 
 const searchHistoryEl = document.querySelector(".search_history_wrapper");
-//검색창에 focus를 하면 history가 나오게하는 이벤트입니다.
+//검색창에 focus를 하면 history가 나오는 이벤트입니다.
 searchInputEl.addEventListener("focus", () => {
   searchHistoryEl.classList.add("on");
 });
@@ -164,9 +165,9 @@ window.addEventListener("scroll", () => {
         ADD_SEARCH
       );
     }
-    document.querySelector("body").style.backgroundColor = "red";
+    // document.querySelector("body").style.backgroundColor = "red";
   } else {
-    document.querySelector("body").style.backgroundColor = "blue";
+    // document.querySelector("body").style.backgroundColor = "blue";
   }
 });
 
@@ -195,26 +196,26 @@ const newslistMainEl = document.querySelector("main.newslist_wrapper");
 newslistMainEl.addEventListener("click", (e) => {
   // click 한 요소가 clip this 버튼인지 확인합니다.
   if (e.target.classList.contains("clip_button")) {
+    const parentLiEl = e.target.parentElement.parentElement.parentElement;
     // 이미 clip된 요소인지 아닌지 검사하고,
     // clip된 것이라면 clipList 배열에서 삭제합니다.
-    if (e.target.parentElement.classList.contains("clipped")) {
+    if (parentLiEl.classList.contains("clipped")) {
       const index = store.clipList.findIndex((clippedNews) => {
-        return clippedNews._id === e.target.parentElement.dataset._id;
+        // console.log(parentLiEl);
+        return clippedNews._id === parentLiEl.dataset._id;
       });
       store.clipList.splice(index, 1);
 
-      e.target.parentElement.classList.remove("clipped");
+      parentLiEl.classList.remove("clipped");
       e.target.innerText = "Clip this";
       // console.log(store.clipList);
     } else {
       // clip안 된 것이라면,
       // newsList 배열에서 해당 item을 찾아서 clipList에 넣습니다.
       store.clipList.push(
-        store.newsList.find(
-          (item) => item._id === e.target.parentElement.dataset._id
-        )
+        store.newsList.find((item) => item._id === parentLiEl.dataset._id)
       );
-      e.target.parentElement.classList.add("clipped");
+      parentLiEl.classList.add("clipped");
       e.target.innerText = "Unclip this";
       // console.log(store.clipList);
     }
@@ -224,25 +225,25 @@ newslistMainEl.addEventListener("click", (e) => {
 });
 
 // 렌더 된 clip목록에 있는 unclip this 버튼 이벤트입니다.
-
 cliplistWrapperEl.addEventListener("click", (e) => {
   if (e.target.classList.contains("clip_button")) {
+    const parentLiEl = e.target.parentElement.parentElement.parentElement;
     // cliplist에서 해당 item을 삭제하고, 렌더된 해당 엘리먼트도 삭제합니다.
     const index = store.clipList.findIndex((clippedNews) => {
-      return clippedNews._id === e.target.parentElement.dataset._id;
+      return clippedNews._id === parentLiEl.dataset._id;
     });
     store.clipList.splice(index, 1);
-    e.target.parentElement.remove();
+    parentLiEl.remove();
 
     // 레더 된 검색된 기사목록에서도 해당 기사가 있는지 찾아서 있다면,
     // unclip으로 된 버튼을 clip으로 바꾸고 class="clipped"도 삭제합니다.
     const willChangeEl = document.querySelector(
-      `main.newslist_wrapper > ul > li[data-_id='${e.target.parentElement.dataset._id}']`
+      `main.newslist_wrapper > ul > li[data-_id='${parentLiEl.dataset._id}']`
     );
     if (willChangeEl) {
       willChangeEl.classList.remove("clipped");
       willChangeEl.querySelector(".clip_button").innerText = "Clip this";
-      console.log("진입성공");
+      // console.log("진입성공");
     }
   }
 });
@@ -278,23 +279,40 @@ async function printNewsList(url, searchType) {
 
   for (let i = (store.page - 1) * 10; i < store.newsList.length; i++) {
     const li = document.createElement("li");
-    //id값을 li엘리먼트에 data로 주입합니다.
+    // id값을 li엘리먼트에 data로 주입합니다.
     li.dataset._id = store.newsList[i]._id;
-    //section출력을 위한 엘리먼트(span)을 생성합니다.
+    // img를 출력하는 엘리먼트를 생성합니다.
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "img_wrapper";
+    const imgEl = document.createElement("img");
+    // console.log(store.newsList[i].multimedia[0].url);
+    if (store.newsList[i].multimedia.length === 0) {
+      imgEl.src = "./The_New_York_Times_logo.png";
+    } else {
+      // imgEl.src = `https://static01.nyt.com/${store.newsList[i].multimedia[0].url}`;
+      imgEl.src = `http://www.nytimes.com/${store.newsList[i].multimedia[0].url}`;
+    }
+    imgEl.alt = store.newsList[i].headline.main;
+    imgWrap.appendChild(imgEl);
+    li.appendChild(imgWrap);
+    // 오른쪽 div 를 생성합니다.
+    const rightdiv = document.createElement("div");
+    rightdiv.className = "right_div";
+    // section출력을 위한 엘리먼트(span)을 생성합니다.
     const sectionEl = document.createElement("span");
     sectionEl.innerText = store.newsList[i].section_name;
-    li.appendChild(sectionEl);
+    rightdiv.appendChild(sectionEl);
     // 기사 엘리먼트(strong)를 생성합니다.
     const strong = document.createElement("strong");
     strong.innerText = store.newsList[i].headline.main;
-    li.appendChild(strong);
+    rightdiv.appendChild(strong);
     // 날짜 엘리먼트(span)를 생성합니다.
     const span = document.createElement("span");
     span.className = "pub_date";
     // span.innerText = store.newsList[i].pub_date;
     span.innerText = store.newsList[i].pub_date.replace("T", " ").split("+")[0];
     // console.log(new Date(store.newsList[i].pub_date));
-    li.appendChild(span);
+    rightdiv.appendChild(span);
     // clip하기 혹은 unclip하기 버튼을 생성합니다.
     const clipBtn = document.createElement("button");
     clipBtn.className = "clip_button";
@@ -313,17 +331,25 @@ async function printNewsList(url, searchType) {
       clipBtn.innerText = "Clip this";
     }
 
-    li.appendChild(clipBtn);
+    rightdiv.appendChild(clipBtn);
     // 뉴스보러가기 anchor를 생성합니다.
     const a = document.createElement("a");
     a.href = store.newsList[i].web_url;
     a.target = "_blank";
     a.title = "open in new window";
-    li.appendChild(a);
+    rightdiv.appendChild(a);
     // 뉴스보러가기 버튼을 생성합니다.
     const detailBtn = document.createElement("button");
     detailBtn.innerText = "See Detail";
+    detailBtn.className = "detail_news_button";
     a.appendChild(detailBtn);
+
+    // article 엘리먼트를 생성합니다.
+    const articleEl = document.createElement("article");
+    articleEl.appendChild(imgWrap);
+    articleEl.appendChild(rightdiv);
+
+    li.appendChild(articleEl);
 
     if (searchType === NEW_SEARCH) {
       ul.appendChild(li);
@@ -411,39 +437,62 @@ function printClipList() {
   const ul = document.createElement("ul");
   store.clipList.forEach((item) => {
     const li = document.createElement("li");
-    //id값을 li엘리먼트에 data로 주입합니다.
+    // id값을 li엘리먼트에 data로 주입합니다.
     li.dataset._id = item._id;
-    //section출력을 위한 엘리먼트(span)을 생성합니다.
+    // img를 출력하는 엘리먼트를 생성합니다.
+    const imgWrap = document.createElement("div");
+    imgWrap.className = "img_wrapper";
+    const imgEl = document.createElement("img");
+    // console.log(item.multimedia[0].url);
+    if (item.multimedia.length === 0) {
+      imgEl.src = "./The_New_York_Times_logo.png";
+    } else {
+      // imgEl.src = `https://static01.nyt.com/${item.multimedia[0].url}`;
+      imgEl.src = `http://www.nytimes.com/${item.multimedia[0].url}`;
+    }
+    imgEl.alt = item.headline.main;
+    imgWrap.appendChild(imgEl);
+    // 오른쪽 div 를 생성합니다.
+    const rightdiv = document.createElement("div");
+    rightdiv.className = "right_div";
+    // section출력을 위한 엘리먼트(span)을 생성합니다.
     const sectionEl = document.createElement("span");
     sectionEl.innerText = item.section_name;
-    li.appendChild(sectionEl);
+    rightdiv.appendChild(sectionEl);
     // 기사 엘리먼트(strong)을 생성합니다.
     const strong = document.createElement("strong");
     strong.innerText = item.headline.main;
-    li.appendChild(strong);
+    rightdiv.appendChild(strong);
     // 날짜 엘리먼트(span)을 생성합니다.
     const span = document.createElement("span");
     span.className = "pub_date";
     span.innerText = item.pub_date.replace("T", " ").split("+")[0];
     // span.innerText = item.pub_date;
-    li.appendChild(span);
+    rightdiv.appendChild(span);
     // unclip하기 버튼 생성합니다.
     const clipBtn = document.createElement("button");
     clipBtn.className = "clip_button";
     clipBtn.innerText = "Unclip this";
     li.classList.add("clipped");
-    li.appendChild(clipBtn);
+    rightdiv.appendChild(clipBtn);
     // 뉴스보러가기 anchor를 생성합니다.
     const a = document.createElement("a");
     a.href = item.web_url;
     a.target = "_blank";
     a.title = "open in new window";
-    li.appendChild(a);
+    rightdiv.appendChild(a);
     // 뉴스보러가기 버튼을 생성합니다.
     const detailBtn = document.createElement("button");
     detailBtn.innerText = "See Detail";
+    detailBtn.className = "detail_news_button";
     a.appendChild(detailBtn);
 
+    // article 엘리먼트를 생성합니다.
+    const articleEl = document.createElement("article");
+    articleEl.appendChild(imgWrap);
+    articleEl.appendChild(rightdiv);
+
+    li.appendChild(articleEl);
     ul.appendChild(li);
   });
 
