@@ -1,4 +1,4 @@
-const API_TOKEN = "atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr";
+const API_TOKEN = "";
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=${API_TOKEN}`;
 
 const NEW_SEARCH = "NEW_SEARCH";
