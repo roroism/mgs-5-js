@@ -15,6 +15,15 @@ button {
   border-radius: 3px;
   cursor: pointer; }
 
+.hidden {
+  display: block;
+  position: absolute;
+  left: -1000%;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  color: #fff; }
+
 #root .wrapper {
   width: 80%;
   margin: 0 auto;
@@ -37,10 +46,8 @@ button {
     #root .wrapper .search_wrapper .search {
       margin-bottom: 1rem;
       position: relative; }
-      #root .wrapper .search_wrapper .search label {
-        display: none;
-        width: 10%; }
       #root .wrapper .search_wrapper .search #inputSearch {
+        float: left;
         width: 50%;
         font-size: 1.5rem;
         padding: 0.4rem 1rem;
@@ -57,6 +64,21 @@ button {
           color: #999;
           font-size: 1.3rem;
           font-weight: 300; }
+      #root .wrapper .search_wrapper .search .search_btn_wrapper {
+        position: relative;
+        float: left; }
+        #root .wrapper .search_wrapper .search .search_btn_wrapper #search_btn {
+          position: absolute;
+          z-index: 4;
+          right: 0;
+          top: 0;
+          background: none;
+          background-image: url(./icon_search.png);
+          background-position: center;
+          background-repeat: no-repeat;
+          box-sizing: border-box;
+          text-indent: -9999px;
+          border: 1px solid transparent; }
       #root .wrapper .search_wrapper .search .search_history_wrapper {
         position: absolute;
         left: 0;
@@ -85,7 +107,9 @@ button {
               white-space: nowrap;
               overflow: hidden; }
     #root .wrapper .search_wrapper .search_result_wrapper {
+      clear: both;
       height: 1rem;
+      padding-top: 1.5rem;
       margin-bottom: 0.5rem; }
   #root .wrapper main.newslist_wrapper,
   #root .wrapper main.cliplist_wrapper {
