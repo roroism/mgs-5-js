@@ -85,6 +85,7 @@ button {
               white-space: nowrap;
               overflow: hidden; }
     #root .wrapper .search_wrapper .search_result_wrapper {
+      height: 1rem;
       margin-bottom: 0.5rem; }
   #root .wrapper main.newslist_wrapper,
   #root .wrapper main.cliplist_wrapper {
@@ -165,6 +166,14 @@ button {
               color: #666;
               background-color: #fff;
               border: 1px solid #666; }
+            #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button.unclip,
+            #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button.unclip {
+              background-color: coral;
+              border: 1px solid coral; }
+              #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button.unclip:hover,
+              #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button.unclip:hover {
+                background-color: #fff;
+                color: coral; }
           #root .wrapper main.newslist_wrapper ul li article div.right_div a,
           #root .wrapper main.cliplist_wrapper ul li article div.right_div a {
             position: absolute;
