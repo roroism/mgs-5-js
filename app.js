@@ -28,13 +28,16 @@ const mainPageTemplate = `
     <header>
     </header>
     <div class="clipped_news_wrapper">
-      <button>clipped News</button>
+      <button type="button">clipped News</button>
     </div>
 
     <div class="search_wrapper on">
       <div class="search">
-        <label for="inputSearch">Search</label>
+        <label for="inputSearch" class="hidden">Search</label>
         <input type="text" id="inputSearch" placeholder="Search">
+        <div class="search_btn_wrapper">
+          <button type="button" id="search_btn">검색</button>
+        </div>
         <div class="search_history_wrapper">
         </div>
       </div>
