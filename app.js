@@ -1,4 +1,4 @@
-const API_TOKEN = "";
+const API_TOKEN = "atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr";
 const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=${API_TOKEN}`;
 
 const NEW_SEARCH = "NEW_SEARCH";
@@ -41,10 +41,9 @@ const mainPageTemplate = `
         <div class="search_history_wrapper">
         </div>
       </div>
-      <div class="search_result_wrapper">
-      </div>
     </div>
-
+    <div class="search_result_wrapper">
+    </div>
     <main class="newslist_wrapper on">
     </main>
     <main class="cliplist_wrapper">
