@@ -1,5 +1,5 @@
-const NEWS_URL =
-  'https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=atuLPNUKKa8AhV1aMr5zs2c1lNymmGsr';
+const API_TOKEN = "";
+const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=${API_TOKEN}`;
 
 const NEW_SEARCH = "NEW_SEARCH";
 const ADD_SEARCH = "ADD_SEARCH";
@@ -9,7 +9,7 @@ const store = {
   // '페이지 첫 렌더링시'와 '검색에 성공했을 시' 에는 1로 초기화 합니다.
   page: 1,
   // 받아온 데이터를 보관합니다.
-  newList: [],
+  newsList: [],
   // 검색 성공한 단어들을 저장할 배열입니다.
   searchHistories: [],
   // clip된 기사를 저장할 배열입니다.
@@ -111,6 +111,7 @@ searchInputEl.addEventListener("keyup", (e) => {
     return;
   }
 
+  // setTimeout 함수를 취소합니다.
   if (setTimeoutId) {
     clearTimeout(setTimeoutId);
     setTimeoutId = null;
@@ -191,31 +192,40 @@ document
     }
   });
 
-// 렌더 된 검색목록에 있는 clip this / unclip this 버튼 이벤트입니다.
+// 렌더 된 검색된뉴스목록에 있는 clip this / unclip this 버튼 이벤트입니다.
 const newslistMainEl = document.querySelector("main.newslist_wrapper");
 newslistMainEl.addEventListener("click", (e) => {
   // click 한 요소가 clip this 버튼인지 확인합니다.
   if (e.target.classList.contains("clip_button")) {
+    // clip된 뉴스인지 아닌지 확인하는 방법으로 li태그에 class로 넣어둔 값을 얻기 위해, li엘리먼트를 가져옵니다.
     const parentLiEl = e.target.parentElement.parentElement.parentElement;
     // 이미 clip된 요소인지 아닌지 검사하고,
-    // clip된 것이라면 clipList 배열에서 삭제합니다.
+    // if) clip된 것이라면 clipList 배열에서 삭제합니다.
     if (parentLiEl.classList.contains("clipped")) {
+      // clipList에서 _id 값으로 해당하는 item의 index값을 얻어서 배열에서 삭제합니다.
       const index = store.clipList.findIndex((clippedNews) => {
         // console.log(parentLiEl);
         return clippedNews._id === parentLiEl.dataset._id;
       });
       store.clipList.splice(index, 1);
-
+      // li엘리먼트의 class로 있었던 clipped를 제거합니다.
       parentLiEl.classList.remove("clipped");
+      // 버튼의 클래스에서 'unclip'을 삭제합니다.
+      e.target.classList.remove("unclip");
+      // 버튼의 이름을 Unclip this에서 Clip this로 변경합니다.
       e.target.innerText = "Clip this";
       // console.log(store.clipList);
     } else {
-      // clip안 된 것이라면,
+      // if) clip안 된 것이라면,
       // newsList 배열에서 해당 item을 찾아서 clipList에 넣습니다.
       store.clipList.push(
         store.newsList.find((item) => item._id === parentLiEl.dataset._id)
       );
+      // li엘리먼트의 클래스로 clipped를 추가합니다.
       parentLiEl.classList.add("clipped");
+      // 버튼의 클래스에 'unclip'을 추가합니다.
+      e.target.classList.add("unclip");
+      // 버튼의 이름을 clip this에서 Unclip this로 변경합니다.
       e.target.innerText = "Unclip this";
       // console.log(store.clipList);
     }
@@ -235,14 +245,16 @@ cliplistWrapperEl.addEventListener("click", (e) => {
     store.clipList.splice(index, 1);
     parentLiEl.remove();
 
-    // 레더 된 검색된 기사목록에서도 해당 기사가 있는지 찾아서 있다면,
-    // unclip으로 된 버튼을 clip으로 바꾸고 class="clipped"도 삭제합니다.
+    // 렌더 된 검색된 기사목록에서도 해당 기사가 있는지 찾아서 있다면,
+    // unclip으로 된 버튼이름을 clip으로 바꾸고, 버튼의 클래스 unclip을 삭제합니다.
+    // 그리고 li 엘리먼트의 클래스"clipped"도 삭제합니다.
     const willChangeEl = document.querySelector(
       `main.newslist_wrapper > ul > li[data-_id='${parentLiEl.dataset._id}']`
     );
     if (willChangeEl) {
       willChangeEl.classList.remove("clipped");
       willChangeEl.querySelector(".clip_button").innerText = "Clip this";
+      willChangeEl.querySelector(".clip_button").classList.remove("unclip");
       // console.log("진입성공");
     }
   }
@@ -320,14 +332,18 @@ async function printNewsList(url, searchType) {
     // 이미 clip 된 뉴스인지 아닌지 검사합니다.
     if (
       store.clipList.find((clippedNews) => {
-        // console.log("store.newList[i]._id", store.newsList[i]._id);
         // console.log("clippedNews._id", clippedNews._id);
         return store.newsList[i]._id === clippedNews._id;
       })
     ) {
+      // if) 이미 clip된 뉴스라면,
+      // clip 버튼에 이름을 Unclip this으로 설정하고, unclip 클래스를 추가합니다.
       clipBtn.innerText = "Unclip this";
+      clipBtn.classList.add("unclip");
+      // li엘리먼트에 clipped 클래스를 추가합니다.
       li.classList.add("clipped");
     } else {
+      // if) clip되지 않은 뉴스라면
       clipBtn.innerText = "Clip this";
     }
 
@@ -414,7 +430,7 @@ function searchResult() {
   // console.log("searchResultWrapperEl", searchResultWrapperEl);
   if (spanEl) searchResultWrapperEl.removeChild(spanEl);
   if (store.searchHistories[0]) {
-    console.log("결과보고 수행");
+    // console.log("결과보고 수행");
     const createspanEl = document.createElement("span");
     createspanEl.innerText = `${store.searchHistories[0]}에 대한 검색 결과`;
     searchResultWrapperEl.appendChild(createspanEl);
@@ -471,7 +487,7 @@ function printClipList() {
     rightdiv.appendChild(span);
     // unclip하기 버튼 생성합니다.
     const clipBtn = document.createElement("button");
-    clipBtn.className = "clip_button";
+    clipBtn.classList.add("clip_button", "unclip");
     clipBtn.innerText = "Unclip this";
     li.classList.add("clipped");
     rightdiv.appendChild(clipBtn);
