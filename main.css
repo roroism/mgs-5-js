@@ -111,10 +111,12 @@ button {
               white-space: nowrap;
               overflow: hidden; }
   #root .wrapper .search_result_wrapper {
-    clear: both;
     height: 1rem;
     padding-top: 1.5rem;
-    margin-bottom: 0.5rem; }
+    margin-bottom: 0.5rem;
+    display: none; }
+    #root .wrapper .search_result_wrapper.on {
+      display: block; }
   #root .wrapper main.newslist_wrapper,
   #root .wrapper main.cliplist_wrapper {
     display: none;
