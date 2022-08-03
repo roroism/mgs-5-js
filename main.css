@@ -42,13 +42,17 @@ button {
   #root .wrapper .search_wrapper {
     display: none; }
     #root .wrapper .search_wrapper.on {
-      display: block; }
+      display: flex;
+      justify-content: center;
+      align-items: center; }
     #root .wrapper .search_wrapper .search {
       margin-bottom: 1rem;
-      position: relative; }
+      position: relative;
+      width: 50%; }
       #root .wrapper .search_wrapper .search #inputSearch {
+        position: relative;
         float: left;
-        width: 50%;
+        width: 100%;
         font-size: 1.5rem;
         padding: 0.4rem 1rem;
         border-style: none;
@@ -83,7 +87,7 @@ button {
         position: absolute;
         left: 0;
         top: 0;
-        width: 50%;
+        width: 100%;
         padding-top: 2.55rem;
         box-sizing: border-box;
         display: none;
@@ -106,11 +110,11 @@ button {
               text-overflow: ellipsis;
               white-space: nowrap;
               overflow: hidden; }
-    #root .wrapper .search_wrapper .search_result_wrapper {
-      clear: both;
-      height: 1rem;
-      padding-top: 1.5rem;
-      margin-bottom: 0.5rem; }
+  #root .wrapper .search_result_wrapper {
+    clear: both;
+    height: 1rem;
+    padding-top: 1.5rem;
+    margin-bottom: 0.5rem; }
   #root .wrapper main.newslist_wrapper,
   #root .wrapper main.cliplist_wrapper {
     display: none;
