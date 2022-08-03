@@ -42,7 +42,7 @@ const mainPageTemplate = `
         </div>
       </div>
     </div>
-    <div class="search_result_wrapper">
+    <div class="search_result_wrapper on">
     </div>
     <main class="newslist_wrapper on">
     </main>
@@ -177,6 +177,7 @@ window.addEventListener("scroll", () => {
 // 버튼을 클릭하면 clip화면과 검색화면을 switching 해주는 이벤트입니다.
 const searchWrapperEl = document.querySelector(".search_wrapper");
 const newslistWrapperEl = document.querySelector("main.newslist_wrapper");
+const searchResultWrapperEl = document.querySelector(".search_result_wrapper");
 
 document
   .querySelector(".clipped_news_wrapper > button")
@@ -184,12 +185,14 @@ document
     if (searchWrapperEl.classList.contains("on")) {
       searchWrapperEl.classList.remove("on");
       newslistWrapperEl.classList.remove("on");
+      searchResultWrapperEl.classList.remove("on");
       cliplistWrapperEl.classList.add("on");
       e.currentTarget.innerText = "searched News";
     } else {
       cliplistWrapperEl.classList.remove("on");
       searchWrapperEl.classList.add("on");
       newslistWrapperEl.classList.add("on");
+      searchResultWrapperEl.classList.add("on");
       e.currentTarget.innerText = "clipped News";
     }
   });
@@ -423,9 +426,9 @@ function printSearchHistory() {
 
 // 수행된 검색에 대한 결과 정보 출력합니다.
 function searchResult() {
-  const searchResultWrapperEl = document.querySelector(
-    ".search_result_wrapper"
-  );
+  // const searchResultWrapperEl = document.querySelector(
+  //   ".search_result_wrapper"
+  // );
   const spanEl = document.querySelector(".search_result_wrapper > span");
 
   // console.log("store.searchHistories[0]", store.searchHistories[0]);
