@@ -357,6 +357,7 @@ async function printNewsList(url, searchType) {
     const a = document.createElement("a");
     a.href = store.newsList[i].web_url;
     a.target = "_blank";
+    a.rel = "noopener noreferrer";
     a.title = "open in new window";
     rightdiv.appendChild(a);
     // 뉴스보러가기 버튼을 생성합니다.
@@ -500,6 +501,7 @@ function printClipList() {
     const a = document.createElement("a");
     a.href = item.web_url;
     a.target = "_blank";
+    a.rel = "noopener noreferrer";
     a.title = "open in new window";
     rightdiv.appendChild(a);
     // 뉴스보러가기 버튼을 생성합니다.
