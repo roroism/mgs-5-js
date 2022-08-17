@@ -30,7 +30,7 @@ New York Times Search Web
 - [x] scroll을 내리는 경우 추가로 뉴스를 불러오는지 여부
 - [x] input 입력 후 0.5초동안 추가입력이 없는 경우에만 api를 호출
 - [x] input value가 있는 경우만 api를 호출
-- [ ] 새 탭에서 외부 url을 open하는 경우, 보안 및 최적화를 위한 attribute를 추가했는지 여부
+- [x] 새 탭에서 외부 url을 open하는 경우, 보안 및 최적화를 위한 attribute를 추가했는지 여부
 
 ### 개발과정
 
