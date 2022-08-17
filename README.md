@@ -34,7 +34,7 @@ New York Times Search Web
 
 ### 개발과정
 
-- [ ] 각 작업에 대하여 commit message를 잘 작성했는지 여부
+- [x] 각 작업에 대하여 commit message를 잘 작성했는지 여부
 - [ ] 아무 commit이나 checkout 하여도 빌드에러가 나지않고 잘 실행되는지 여부
 - [ ] api token이 git에 포함되지 않았으며, 쉽게 교체할 수 있는 구조인지 여부
 - [ ] 코드가 목적에 따라 적절히 분리되어있는지 여부
