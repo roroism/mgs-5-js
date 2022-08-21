@@ -67,52 +67,52 @@ const cliplistWrapperEl = document.querySelector("main.cliplist_wrapper");
 let setTimeoutId;
 
 // 검색창의 이벤트입니다.
-searchInputEl.addEventListener("keyup", (e) => {
-  if (
-    e.key === "Tab" ||
-    e.key === "CapsLock" ||
-    e.key === "Shift" ||
-    e.key === "Control" ||
-    e.key === "HanjaMode" ||
-    e.key === "HangulMode" ||
-    e.key === "ContextMenu" ||
-    e.key === "Meta" ||
-    e.key === "Alt" ||
-    e.key === "Pause" ||
-    e.key === "Caps Lock" ||
-    e.key === "Escape" ||
-    e.key === "Page Up" ||
-    e.key === "Page Down" ||
-    e.key === "End" ||
-    e.key === "Home" ||
-    e.key === "ArrowLeft" ||
-    e.key === "ArrowUp" ||
-    e.key === "ArrowRight" ||
-    e.key === "ArrowDown" ||
-    e.key === "Insert" ||
-    e.key === "Delete" ||
-    e.key === "Windows" ||
-    e.key === "Right click" ||
-    e.key === "NumLock" ||
-    e.key === "ScrollLock" ||
-    e.key === "PrintScreen" ||
-    e.key === "PageDown" ||
-    e.key === "PageUp" ||
-    e.key === "F1" ||
-    e.key === "F2" ||
-    e.key === "F3" ||
-    e.key === "F4" ||
-    e.key === "F5" ||
-    e.key === "F6" ||
-    e.key === "F7" ||
-    e.key === "F8" ||
-    e.key === "F9" ||
-    e.key === "F10" ||
-    e.key === "F11" ||
-    e.key === "F12"
-  ) {
-    return;
-  }
+searchInputEl.addEventListener("input", () => {
+  // if (
+  //   e.key === "Tab" ||
+  //   e.key === "CapsLock" ||
+  //   e.key === "Shift" ||
+  //   e.key === "Control" ||
+  //   e.key === "HanjaMode" ||
+  //   e.key === "HangulMode" ||
+  //   e.key === "ContextMenu" ||
+  //   e.key === "Meta" ||
+  //   e.key === "Alt" ||
+  //   e.key === "Pause" ||
+  //   e.key === "Caps Lock" ||
+  //   e.key === "Escape" ||
+  //   e.key === "Page Up" ||
+  //   e.key === "Page Down" ||
+  //   e.key === "End" ||
+  //   e.key === "Home" ||
+  //   e.key === "ArrowLeft" ||
+  //   e.key === "ArrowUp" ||
+  //   e.key === "ArrowRight" ||
+  //   e.key === "ArrowDown" ||
+  //   e.key === "Insert" ||
+  //   e.key === "Delete" ||
+  //   e.key === "Windows" ||
+  //   e.key === "Right click" ||
+  //   e.key === "NumLock" ||
+  //   e.key === "ScrollLock" ||
+  //   e.key === "PrintScreen" ||
+  //   e.key === "PageDown" ||
+  //   e.key === "PageUp" ||
+  //   e.key === "F1" ||
+  //   e.key === "F2" ||
+  //   e.key === "F3" ||
+  //   e.key === "F4" ||
+  //   e.key === "F5" ||
+  //   e.key === "F6" ||
+  //   e.key === "F7" ||
+  //   e.key === "F8" ||
+  //   e.key === "F9" ||
+  //   e.key === "F10" ||
+  //   e.key === "F11" ||
+  //   e.key === "F12"
+  // ) {
+  //   return;
+  // }
 
   // setTimeout 함수를 취소합니다.
   if (setTimeoutId) {
