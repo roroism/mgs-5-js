@@ -1,52 +1,223 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500&display=swap");
 body {
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: #333; }
 
+button {
+  background-color: #aaa;
+  border: 0;
+  outline: 0;
+  padding: 0.7rem 0;
+  width: 120px;
+  box-sizing: border-box;
+  border-radius: 3px;
+  cursor: pointer; }
+
+.hidden {
+  display: block;
+  position: absolute;
+  left: -1000%;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  color: #fff; }
+
 #root .wrapper {
   width: 80%;
-  background-color: aqua;
   margin: 0 auto;
   padding: 0 4%; }
+  #root .wrapper .clipped_news_wrapper {
+    padding: 1rem 0; }
+    #root .wrapper .clipped_news_wrapper button {
+      color: #666;
+      background-color: #fff;
+      border: 1px solid #666;
+      transition: all 0.3s; }
+      #root .wrapper .clipped_news_wrapper button:hover {
+        background-color: #666;
+        color: #fff;
+        border: 1px solid #666; }
   #root .wrapper .search_wrapper {
     display: none; }
     #root .wrapper .search_wrapper.on {
-      display: block; }
+      display: flex;
+      justify-content: center;
+      align-items: center; }
     #root .wrapper .search_wrapper .search {
-      padding: 1rem 0;
-      position: relative; }
-      #root .wrapper .search_wrapper .search label {
-        display: inline-block;
-        width: 10%; }
+      margin-bottom: 1rem;
+      position: relative;
+      width: 50%; }
       #root .wrapper .search_wrapper .search #inputSearch {
-        width: 30%; }
+        position: relative;
+        float: left;
+        width: 100%;
+        font-size: 1.5rem;
+        padding: 0.4rem 1rem;
+        border-style: none;
+        box-sizing: border-box;
+        border: 1px solid #999;
+        border-radius: 3px;
+        position: relative;
+        z-index: 3; }
+        #root .wrapper .search_wrapper .search #inputSearch:focus {
+          outline: none;
+          border: 1px solid #666; }
+        #root .wrapper .search_wrapper .search #inputSearch::placeholder {
+          color: #999;
+          font-size: 1.3rem;
+          font-weight: 300; }
+      #root .wrapper .search_wrapper .search .search_btn_wrapper {
+        position: relative;
+        float: left; }
+        #root .wrapper .search_wrapper .search .search_btn_wrapper #search_btn {
+          position: absolute;
+          z-index: 4;
+          right: 0;
+          top: 0;
+          background: none;
+          background-image: url(./icon_search.png);
+          background-position: center;
+          background-repeat: no-repeat;
+          box-sizing: border-box;
+          text-indent: -9999px;
+          border: 1px solid transparent; }
       #root .wrapper .search_wrapper .search .search_history_wrapper {
-        margin-left: 10%;
         position: absolute;
         left: 0;
-        top: 2.3rem;
-        width: 30%;
-        min-height: 1rem;
-        padding: 0 2%;
-        background-color: orange;
+        top: 0;
+        width: 100%;
+        padding-top: 2.55rem;
         box-sizing: border-box;
-        display: none; }
+        display: none;
+        border-radius: 3px;
+        border: 1px solid #666;
+        z-index: 2; }
         #root .wrapper .search_wrapper .search .search_history_wrapper.on {
           display: block; }
-  #root .wrapper main.newslist_wrapper {
-    display: none;
-    background-color: blueviolet; }
-    #root .wrapper main.newslist_wrapper.on {
+        #root .wrapper .search_wrapper .search .search_history_wrapper ul.search_history_list {
+          width: 100%;
+          background-color: #fff; }
+          #root .wrapper .search_wrapper .search .search_history_wrapper ul.search_history_list li {
+            padding: 0 1rem; }
+            #root .wrapper .search_wrapper .search .search_history_wrapper ul.search_history_list li:hover {
+              background-color: #f8f8f8; }
+            #root .wrapper .search_wrapper .search .search_history_wrapper ul.search_history_list li a {
+              padding: 0.5rem 0;
+              font-size: 1.125rem;
+              display: block;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+              overflow: hidden; }
+  #root .wrapper .search_result_wrapper {
+    height: 1rem;
+    padding-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    display: none; }
+    #root .wrapper .search_result_wrapper.on {
       display: block; }
-    #root .wrapper main.newslist_wrapper ul li {
-      height: 200px; }
+  #root .wrapper main.newslist_wrapper,
   #root .wrapper main.cliplist_wrapper {
     display: none;
-    background-color: blueviolet; }
+    border-top: 2px solid #999; }
+    #root .wrapper main.newslist_wrapper.on,
     #root .wrapper main.cliplist_wrapper.on {
       display: block; }
+    #root .wrapper main.newslist_wrapper ul li,
     #root .wrapper main.cliplist_wrapper ul li {
-      height: 200px; }
+      padding: 1rem 1.5%;
+      border-bottom: 1px solid #ddd;
+      background-color: #fff;
+      transition: all 0.3s; }
+      #root .wrapper main.newslist_wrapper ul li:hover,
+      #root .wrapper main.cliplist_wrapper ul li:hover {
+        background-color: #fcfcfc; }
+      #root .wrapper main.newslist_wrapper ul li article,
+      #root .wrapper main.cliplist_wrapper ul li article {
+        display: flex;
+        justify-content: space-between; }
+        #root .wrapper main.newslist_wrapper ul li article div.img_wrapper,
+        #root .wrapper main.cliplist_wrapper ul li article div.img_wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          overflow: hidden;
+          width: 35%;
+          min-height: 170px;
+          max-height: 300px;
+          background-color: #fff; }
+          #root .wrapper main.newslist_wrapper ul li article div.img_wrapper img,
+          #root .wrapper main.cliplist_wrapper ul li article div.img_wrapper img {
+            background-color: #fff;
+            display: block;
+            width: 100%;
+            object-fit: scale-down;
+            object-position: 50% 50%; }
+        #root .wrapper main.newslist_wrapper ul li article div.right_div,
+        #root .wrapper main.cliplist_wrapper ul li article div.right_div {
+          position: relative;
+          width: 63%;
+          padding: 1rem 0; }
+          #root .wrapper main.newslist_wrapper ul li article div.right_div span:nth-of-type(1),
+          #root .wrapper main.cliplist_wrapper ul li article div.right_div span:nth-of-type(1) {
+            font-family: "Oswald", sans-serif;
+            color: #666;
+            display: block; }
+          #root .wrapper main.newslist_wrapper ul li article div.right_div strong,
+          #root .wrapper main.cliplist_wrapper ul li article div.right_div strong {
+            display: block;
+            font-weight: 500;
+            font-size: 1.438rem;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            margin-top: 0.5rem;
+            line-height: 1.5em;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; }
+          #root .wrapper main.newslist_wrapper ul li article div.right_div span.pub_date,
+          #root .wrapper main.cliplist_wrapper ul li article div.right_div span.pub_date {
+            margin-top: 0.6rem;
+            display: block;
+            font-size: 0.938rem;
+            color: #999; }
+          #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button,
+          #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button {
+            position: absolute;
+            right: 140px;
+            bottom: 10px;
+            background-color: #666;
+            color: #fff;
+            border: 1px solid #666;
+            transition: all 0.3s; }
+            #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button:hover,
+            #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button:hover {
+              color: #666;
+              background-color: #fff;
+              border: 1px solid #666; }
+            #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button.unclip,
+            #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button.unclip {
+              background-color: coral;
+              border: 1px solid coral; }
+              #root .wrapper main.newslist_wrapper ul li article div.right_div button.clip_button.unclip:hover,
+              #root .wrapper main.cliplist_wrapper ul li article div.right_div button.clip_button.unclip:hover {
+                background-color: #fff;
+                color: coral; }
+          #root .wrapper main.newslist_wrapper ul li article div.right_div a,
+          #root .wrapper main.cliplist_wrapper ul li article div.right_div a {
+            position: absolute;
+            right: 10px;
+            bottom: 10px; }
+            #root .wrapper main.newslist_wrapper ul li article div.right_div a button.detail_news_button,
+            #root .wrapper main.cliplist_wrapper ul li article div.right_div a button.detail_news_button {
+              color: #999;
+              background-color: #fff;
+              border: 1px solid #999;
+              transition: all 0.3s; }
+              #root .wrapper main.newslist_wrapper ul li article div.right_div a button.detail_news_button:hover,
+              #root .wrapper main.cliplist_wrapper ul li article div.right_div a button.detail_news_button:hover {
+                color: #000;
+                border: 1px solid #000; }
 
 /*# sourceMappingURL=main.css.map */
