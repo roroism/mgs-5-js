@@ -2,10 +2,10 @@
   "name": "mgs-5-js-toy",
   "version": "1.0.0",
   "description": "New York Times Search Web",
-  "main": "api.js",
   "scripts": {
+    "start": "parcel index.html",
     "dev": "parcel index.html",
-    "build": "parcel build"
+    "build": "parcel build index.html"
   },
   "repository": {
     "type": "git",
