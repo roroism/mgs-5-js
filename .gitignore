@@ -6,3 +6,4 @@ api.js
 node_modules
 dist
 .cache
+.parcel-cache
