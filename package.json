@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/roroism/mgs-5-js-toy#readme",
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.7.0"
   }
 }
