@@ -1,4 +1,4 @@
-# MY JavaScript Toy Project
+# MY JavaScript Project
 
 New York Times Search Web
 
