@@ -4,3 +4,5 @@ toyproject.pdf
 # main.css.map
 api.js
 node_modules
+dist
+.cache
