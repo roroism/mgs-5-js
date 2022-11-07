@@ -1,0 +1,24 @@
+{
+  "name": "mgs-5-js-toy",
+  "version": "1.0.0",
+  "description": "New York Times Search Web",
+  "main": "api.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roroism/mgs-5-js-toy.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roroism/mgs-5-js-toy/issues"
+  },
+  "homepage": "https://github.com/roroism/mgs-5-js-toy#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
+}
