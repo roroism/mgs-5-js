@@ -1,6 +1,6 @@
-import API_TOKEN from "./api.js";
+// import API_TOKEN from "./api.js";
 
-const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=${API_TOKEN}`;
+const NEWS_URL = `https://api.nytimes.com/svc/search/v2/articlesearch.json?fq=headline:("@searchkeyword")&page=@page&sort=newest&api-key=${process.env.API_TOKEN_KEY}`;
 
 const NEW_SEARCH = "NEW_SEARCH";
 const ADD_SEARCH = "ADD_SEARCH";
@@ -110,7 +110,8 @@ function debounce(callback) {
   };
 }
 
-searchInputEl.addEventListener("input", () => {
+searchInputEl.addEventListener("input", (event) => {
+  if (event.target.value.trim() === "") return;
   processChanges();
 });
 
