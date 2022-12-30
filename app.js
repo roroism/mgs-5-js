@@ -119,6 +119,9 @@ function processFlow() {
   const searchkeyword = searchInputEl.value.trim();
 
   store.page = 1;
+
+  if (searchkeyword === "") return;
+
   printNewsList(NEWS_URL.replace("@searchkeyword", searchkeyword), NEW_SEARCH);
   // 검색에 성공했으므로 검색어를 배열에 저장하고 출력하는 함수로 보냅니다.
   saveSearchWordtoHistory(searchkeyword);
