@@ -292,7 +292,7 @@ async function printNewsList(url, searchType) {
     const imgEl = document.createElement("img");
     // console.log(store.newsList[i].multimedia[0].url);
     if (store.newsList[i].multimedia.length === 0) {
-      imgEl.src = "./The_New_York_Times_logo.png";
+      imgEl.src = `${process.env.BASE_URL}img/The_New_York_Times_logo.png`;
     } else {
       // imgEl.src = `https://static01.nyt.com/${store.newsList[i].multimedia[0].url}`;
       imgEl.src = `http://www.nytimes.com/${store.newsList[i].multimedia[0].url}`;
@@ -455,7 +455,7 @@ function printClipList() {
     const imgEl = document.createElement("img");
     // console.log(item.multimedia[0].url);
     if (item.multimedia.length === 0) {
-      imgEl.src = "./The_New_York_Times_logo.png";
+      imgEl.src = `${process.env.BASE_URL}img/The_New_York_Times_logo.png`;
     } else {
       // imgEl.src = `https://static01.nyt.com/${item.multimedia[0].url}`;
       imgEl.src = `http://www.nytimes.com/${item.multimedia[0].url}`;
