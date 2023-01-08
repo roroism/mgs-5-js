@@ -56,6 +56,15 @@ button {
         justify-content: center;
         align-items: center;
       }
+      .visual_image_wrap {
+        margin: 0 auto;
+        width: 70%;
+        padding: 50px 0;
+        img {
+          width: 100%;
+          display: block;
+        }
+      }
       .search {
         margin-bottom: 1rem;
         position: relative;

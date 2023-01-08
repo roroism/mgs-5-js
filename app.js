@@ -33,6 +33,9 @@ const mainPageTemplate = `
     </div>
 
     <div class="search_wrapper on">
+      <div class="visual_image_wrap">
+        <img src="../img/The_New_York_Times_logo.png" alt="visual image" />
+      </div>
       <div class="search">
         <label for="inputSearch" class="hidden">Search</label>
         <input type="text" id="inputSearch" placeholder="Search">
