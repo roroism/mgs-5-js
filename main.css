@@ -45,6 +45,13 @@ button {
       display: flex;
       justify-content: center;
       align-items: center; }
+    #root .wrapper .search_wrapper .visual_image_wrap {
+      margin: 0 auto;
+      width: 70%;
+      padding: 50px 0; }
+      #root .wrapper .search_wrapper .visual_image_wrap img {
+        width: 100%;
+        display: block; }
     #root .wrapper .search_wrapper .search {
       margin-bottom: 1rem;
       position: relative;
