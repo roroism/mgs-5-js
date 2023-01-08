@@ -47,6 +47,15 @@ button {
         transition: all 0.3s;
       }
     }
+    .visual_image_wrap {
+      margin: 0 auto;
+      width: 70%;
+      padding: 50px 0;
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
     .search_wrapper {
       display: none;
       &.on {
@@ -55,15 +64,6 @@ button {
         // flex-direction: column;
         justify-content: center;
         align-items: center;
-      }
-      .visual_image_wrap {
-        margin: 0 auto;
-        width: 70%;
-        padding: 50px 0;
-        img {
-          width: 100%;
-          display: block;
-        }
       }
       .search {
         margin-bottom: 1rem;
