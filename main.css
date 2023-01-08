@@ -39,19 +39,19 @@ button {
         background-color: #666;
         color: #fff;
         border: 1px solid #666; }
+  #root .wrapper .visual_image_wrap {
+    margin: 0 auto;
+    width: 70%;
+    padding: 50px 0; }
+    #root .wrapper .visual_image_wrap img {
+      width: 100%;
+      display: block; }
   #root .wrapper .search_wrapper {
     display: none; }
     #root .wrapper .search_wrapper.on {
       display: flex;
       justify-content: center;
       align-items: center; }
-    #root .wrapper .search_wrapper .visual_image_wrap {
-      margin: 0 auto;
-      width: 70%;
-      padding: 50px 0; }
-      #root .wrapper .search_wrapper .visual_image_wrap img {
-        width: 100%;
-        display: block; }
     #root .wrapper .search_wrapper .search {
       margin-bottom: 1rem;
       position: relative;
